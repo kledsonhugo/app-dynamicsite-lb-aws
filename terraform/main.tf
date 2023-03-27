@@ -105,7 +105,7 @@ resource "aws_instance" "instance-1b" {
 # RESOURCE: APPLICATION LOAD BALANCER
 
 resource "aws_lb_target_group" "ec2_lb_tg" {
-    name     = "ec2_lb_tg"
+    name     = "ec2-lb-tg"
     protocol = "HTTP"
     port     = "80"
     vpc_id   = aws_vpc.vpc.id
@@ -126,7 +126,7 @@ resource "aws_lb_target_group_attachment" "ec2_lb_tg-instance_1b" {
 resource "aws_lb" "ec2_lb" {
     name               = "ec2_lb"
     load_balancer_type = "application"
-    subnets            = [aws_subnet.sn_pub_az1a.id, aws_subnet.sn_pub_az1bid]
+    subnets            = [aws_subnet.sn_pub_az1a.id, aws_subnet.sn_pub_az1b.id]
     security_groups    = [aws_security_group.vpc_sg_pub.id]
 }
 
