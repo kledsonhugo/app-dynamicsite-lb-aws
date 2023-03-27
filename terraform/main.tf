@@ -58,6 +58,12 @@ resource "aws_route_table_association" "rt_pub_sn_pub_az1b" {
 
 resource "aws_security_group" "vpc_sg_pub" {
     vpc_id = aws_vpc.vpc.id
+    egress {
+        from_port   = "0"
+        to_port     = "0"
+        protocol    = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
     ingress {
         from_port   = "0"
         to_port     = "0"
