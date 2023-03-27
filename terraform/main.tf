@@ -1,20 +1,15 @@
 # RESOURCE: VPC
-
 resource "aws_vpc" "vpc" {
     cidr_block           = "10.0.0.0/16"
     enable_dns_hostnames = true
 }
 
-
 # RESOURCE: INTERNET GATEWAY
-
 resource "aws_internet_gateway" "igw" {
     vpc_id = aws_vpc.vpc.id
 }
 
-
 # RESOURCE: SUBNETS
-
 resource "aws_subnet" "sn_pub_az1a" {
     vpc_id                  = aws_vpc.vpc.id
     availability_zone       = "us-east-1a"
@@ -29,9 +24,7 @@ resource "aws_subnet" "sn_pub_az1b" {
     map_public_ip_on_launch = true
 }
 
-
 # RESOURCE: ROUTE TABLES FOR THE SUBNETS
-
 resource "aws_route_table" "rt_pub" {
     vpc_id = aws_vpc.vpc.id
     route {
@@ -40,9 +33,7 @@ resource "aws_route_table" "rt_pub" {
     }
 }
 
-
 # RESOURCE: ROUTE TABLES ASSOCIATION TO SUBNETS
-
 resource "aws_route_table_association" "rt_pub_sn_pub_az1a" {
   subnet_id      = aws_subnet.sn_pub_az1a.id
   route_table_id = aws_route_table.rt_pub.id
@@ -53,9 +44,7 @@ resource "aws_route_table_association" "rt_pub_sn_pub_az1b" {
   route_table_id = aws_route_table.rt_pub.id
 }
 
-
-# RESOURCE: SECURITY GROUPS
-
+# RESOURCE: SECURITY GROUP
 resource "aws_security_group" "vpc_sg_pub" {
     vpc_id = aws_vpc.vpc.id
     egress {
@@ -84,32 +73,30 @@ resource "aws_security_group" "vpc_sg_pub" {
     }
 }
 
-
 # RESOURCE: EC2
-
 data "template_file" "user_data" {
     template = "${file("./scripts/user_data.sh")}"
 }
 
 resource "aws_instance" "instance-1a" {
-    ami                    = "ami-02e136e904f3da870"
+    ami                    = "ami-00c39f71452c08778"
     instance_type          = "t2.micro"
     subnet_id              = aws_subnet.sn_pub_az1a.id
     vpc_security_group_ids = [aws_security_group.vpc_sg_pub.id]
     user_data              = "${base64encode(data.template_file.user_data.rendered)}"
+    key_name               = "vockey"
 }
 
 resource "aws_instance" "instance-1b" {
-    ami                    = "ami-02e136e904f3da870"
+    ami                    = "ami-00c39f71452c08778"
     instance_type          = "t2.micro"
     subnet_id              = aws_subnet.sn_pub_az1b.id
     vpc_security_group_ids = [aws_security_group.vpc_sg_pub.id]
     user_data              = "${base64encode(data.template_file.user_data.rendered)}"
+    key_name               = "vockey"
 }
 
-
-# RESOURCE: APPLICATION LOAD BALANCER
-
+# RESOURCE: LOAD BALANCER TARGET GROUP
 resource "aws_lb_target_group" "ec2_lb_tg" {
     name     = "ec2-lb-tg"
     protocol = "HTTP"
@@ -129,6 +116,7 @@ resource "aws_lb_target_group_attachment" "ec2_lb_tg-instance_1b" {
     port             = 80
 }
 
+# RESOURCE: LOAD BALANCER
 resource "aws_lb" "ec2_lb" {
     name               = "ec2-lb"
     load_balancer_type = "application"
@@ -140,7 +128,6 @@ resource "aws_lb_listener" "ec2_lb_listener" {
     protocol          = "HTTP"
     port              = "80"
     load_balancer_arn = aws_lb.ec2_lb.arn
-    
     default_action {
         type             = "forward"
         target_group_arn = aws_lb_target_group.ec2_lb_tg.arn
