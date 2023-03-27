@@ -124,7 +124,7 @@ resource "aws_lb_target_group_attachment" "ec2_lb_tg-instance_1b" {
 }
 
 resource "aws_lb" "ec2_lb" {
-    name               = "ec2_lb"
+    name               = "ec2-lb"
     load_balancer_type = "application"
     subnets            = [aws_subnet.sn_pub_az1a.id, aws_subnet.sn_pub_az1b.id]
     security_groups    = [aws_security_group.vpc_sg_pub.id]
