@@ -6,9 +6,9 @@ O Amazon EC2 pode ser utilizado para hospedar quaisquer aplicações, tais como 
 
 O Elastic Load Balancing (ELB) distribui automaticamente o tráfego de aplicações de entrada entre vários destinos e dispositivos virtuais em uma ou mais Zonas de disponibilidade (AZs).
 
-> Referências
-  - [https://aws.amazon.com/pt/ec2/](https://aws.amazon.com/pt/ec2/)
-  - [https://aws.amazon.com/pt/elasticloadbalancing/](https://aws.amazon.com/pt/elasticloadbalancing/)
+Referências
+- [https://aws.amazon.com/pt/ec2/](https://aws.amazon.com/pt/ec2/)
+- [https://aws.amazon.com/pt/elasticloadbalancing/](https://aws.amazon.com/pt/elasticloadbalancing/)
 
 <br>
 
