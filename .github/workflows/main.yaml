@@ -3,7 +3,7 @@ name: IaC Lifecycle
 on:
   push:
     branches:
-    - lb
+    - LB
 
 jobs:
 
@@ -41,12 +41,21 @@ jobs:
     - name: Step 06 - Terraform Validate
       run : terraform -chdir=./terraform validate
 
-    - name: Step 07 - Terraform Plan
+
+    - name: Step 07 - Install Checkov
+      run: |
+        python -m pip install --upgrade pip
+        pip install checkov
+
+    - name: Step 08 - Checkov Scan
+      run: checkov -d ./terraform
+    - name: Step 09 - Terraform Plan
+
       run : terraform -chdir=./terraform plan -input=false -out tfplan
       # run : terraform -chdir=./terraform plan -input=false -destroy -out tfplan
 
-    - name: Step 08 - Terraform Apply
+    - name: Step 10 - Terraform Apply
       run : terraform -chdir=./terraform apply -auto-approve -input=false tfplan
 
-    - name: Step 09 - Terraform Show
+    - name: Step 11 - Terraform Show
       run : terraform -chdir=./terraform show
