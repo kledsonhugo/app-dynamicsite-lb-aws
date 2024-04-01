@@ -6,9 +6,8 @@ dnf install -y httpd wget php-fpm php-mysqli php-json php php-devel telnet tree 
 
 echo "Deploy PHP info app"
 cd /tmp
-git clone https://github.com/kledsonhugo/app-site-ec2-elb
-cp /tmp/app-site-ec2-elb/app/phpinfo.php /var/www/html/index.php
-rm -rf /tmp/app-site-ec2-elb
+git clone https://github.com/kledsonhugo/app-dynamicsite
+cp /tmp/app-dynamicsite/phpinfo.php /var/www/html/index.php
 
 echo "Config Apache WebServer"
 usermod -a -G apache ec2-user

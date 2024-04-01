@@ -79,7 +79,7 @@ data "template_file" "user_data" {
 }
 
 resource "aws_instance" "instance-1a" {
-    ami                    = "ami-00c39f71452c08778"
+    ami                    = "ami-0c101f26f147fa7fd"
     instance_type          = "t2.micro"
     subnet_id              = aws_subnet.sn_pub_az1a.id
     vpc_security_group_ids = [aws_security_group.vpc_sg_pub.id]
@@ -88,7 +88,7 @@ resource "aws_instance" "instance-1a" {
 }
 
 resource "aws_instance" "instance-1b" {
-    ami                    = "ami-00c39f71452c08778"
+    ami                    = "ami-0c101f26f147fa7fd"
     instance_type          = "t2.micro"
     subnet_id              = aws_subnet.sn_pub_az1b.id
     vpc_security_group_ids = [aws_security_group.vpc_sg_pub.id]
