@@ -9,6 +9,8 @@ resource "aws_internet_gateway" "igw" {
     vpc_id = aws_vpc.vpc.id
 }
 
+// testando o pull request
+
 # RESOURCE: SUBNETS
 resource "aws_subnet" "sn_pub_az1a" {
     vpc_id                  = aws_vpc.vpc.id
