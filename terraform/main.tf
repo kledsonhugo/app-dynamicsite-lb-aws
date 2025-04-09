@@ -96,7 +96,7 @@ resource "aws_instance" "instance-1b" {
     key_name               = "vockey"
 }
 
-# RESOURCE: LOAD BALANCER TARGET GROUP
+# RESOURCE: LOAD BALANCER TARGET GROUP AND ITS MEMBERS
 resource "aws_lb_target_group" "ec2_lb_tg" {
     name     = "ec2-lb-tg"
     protocol = "HTTP"
@@ -116,7 +116,7 @@ resource "aws_lb_target_group_attachment" "ec2_lb_tg-instance_1b" {
     port             = 80
 }
 
-# RESOURCE: LOAD BALANCER
+# RESOURCE: LOAD BALANCER ENGINE
 resource "aws_lb" "ec2_lb" {
     name               = "ec2-lb"
     load_balancer_type = "application"
@@ -124,6 +124,7 @@ resource "aws_lb" "ec2_lb" {
     security_groups    = [aws_security_group.vpc_sg_pub.id]
 }
 
+# RESOURCE: LOAD BALANCER LISTENER
 resource "aws_lb_listener" "ec2_lb_listener" {
     protocol          = "HTTP"
     port              = "80"
