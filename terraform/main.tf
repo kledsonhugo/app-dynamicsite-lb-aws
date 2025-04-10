@@ -1,4 +1,4 @@
-# RESOURCE: VPC
+# RESOURCE: VPC Ronaldo
 resource "aws_vpc" "vpc" {
     cidr_block           = "10.0.0.0/16"
     enable_dns_hostnames = true
@@ -9,7 +9,7 @@ resource "aws_internet_gateway" "igw" {
     vpc_id = aws_vpc.vpc.id
 }
 
-# RESOURCE: SUBNETS
+# RESOURCE: SUBNETS Ronaldo
 resource "aws_subnet" "sn_pub_az1a" {
     vpc_id                  = aws_vpc.vpc.id
     availability_zone       = "us-east-1a"
