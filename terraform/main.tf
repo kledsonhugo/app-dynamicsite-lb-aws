@@ -96,6 +96,24 @@ resource "aws_instance" "instance-1b" {
     key_name               = "vockey"
 }
 
+resource "aws_instance" "instance-1c" {
+    ami                    = "ami-00a929b66ed6e0de6"
+    instance_type          = "t2.micro"
+    subnet_id              = aws_subnet.sn_pub_az1b.id
+    vpc_security_group_ids = [aws_security_group.vpc_sg_pub.id]
+    user_data              = "${base64encode(data.template_file.user_data.rendered)}"
+    key_name               = "vockey"
+}
+
+resource "aws_instance" "instance-1d" {
+    ami                    = "ami-00a929b66ed6e0de6"
+    instance_type          = "t2.micro"
+    subnet_id              = aws_subnet.sn_pub_az1a.id
+    vpc_security_group_ids = [aws_security_group.vpc_sg_pub.id]
+    user_data              = "${base64encode(data.template_file.user_data.rendered)}"
+    key_name               = "vockey"
+}
+
 # RESOURCE: LOAD BALANCER TARGET GROUP AND ITS MEMBERS
 resource "aws_lb_target_group" "ec2_lb_tg" {
     name     = "ec2-lb-tg"
@@ -113,6 +131,18 @@ resource "aws_lb_target_group_attachment" "ec2_lb_tg-instance_1a" {
 resource "aws_lb_target_group_attachment" "ec2_lb_tg-instance_1b" {
     target_group_arn = aws_lb_target_group.ec2_lb_tg.arn
     target_id        = aws_instance.instance-1b.id
+    port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "ec2_lb_tg-instance_1c" {
+    target_group_arn = aws_lb_target_group.ec2_lb_tg.arn
+    target_id        = aws_instance.instance-1c.id
+    port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "ec2_lb_tg-instance_1d" {
+    target_group_arn = aws_lb_target_group.ec2_lb_tg.arn
+    target_id        = aws_instance.instance-1d.id
     port             = 80
 }
 
