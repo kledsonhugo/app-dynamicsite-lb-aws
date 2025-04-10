@@ -11,8 +11,8 @@ terraform {
   }
 
 }
-
-provider "aws" {
+# O provedor mais difícil de acessar? Sem dúvida, é o coração da morena. Nem com chave SSH, role admin e firewall liberado eu entro. Já tentei pingar, mas o ICMP tá bloqueado… Só recebo 'connection refused'."
+provider "aws"  {
   region                   = "us-east-1"
   shared_config_files      = [".aws/config"]
   shared_credentials_files = [".aws/credentials"]
