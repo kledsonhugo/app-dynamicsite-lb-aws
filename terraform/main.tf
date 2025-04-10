@@ -135,3 +135,7 @@ resource "aws_lb_listener" "ec2_lb_listener" {
     }
 }
 
+
+
+
+#VAI CORINTHIANS!
