@@ -1,4 +1,4 @@
-output "lb_fqdn" {
+output "lb_url" {
     value = "http://${aws_lb.ec2_lb.dns_name}"
-    description = "FQDN público do Load Balancer"
+    description = "URL pública do Load Balancer"
 }
